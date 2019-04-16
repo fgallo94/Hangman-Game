@@ -47,7 +47,7 @@ public class ConnectionInstance {
      */
     public void connect() throws SQLException {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/strategy", "root", "1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hangman", "root", "1234");
         } catch (SQLException e) {
             System.err.println("SQLException: " + e.getMessage());
             throw e;

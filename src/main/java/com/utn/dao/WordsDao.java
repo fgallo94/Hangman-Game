@@ -17,7 +17,7 @@ public class WordsDao {
      */
     public ArrayList<String> getAll() {
         ArrayList<String> words = new ArrayList<>();
-        String sq = "select * from Words ";
+        String sq = "select * from Word ";
         try {
             conn.connect();
             PreparedStatement st = conn.getConn().prepareStatement(sq);
