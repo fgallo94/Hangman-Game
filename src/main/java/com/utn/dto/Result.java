@@ -16,8 +16,8 @@ public class Result {
 
     @Override
     public String toString() {
-        return  "|| Winner ='" + nameOfWinner + '\'' +
+        return "|| Winner ='" + nameOfWinner + '\'' +
                 ", charsUsed=" + charsUsed +
-                "  ";
+                "  \n";
     }
 }

@@ -11,7 +11,7 @@ public class WordsDao {
     private ConnectionInstance conn = ConnectionInstance.getConnection();
 
     /**
-     * Get all the words of the data base as ArrayList of Result.
+     * Get all the words of the data base as ArrayList of String.
      *
      * @return ArrayList<String>
      */
