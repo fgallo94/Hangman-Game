@@ -18,6 +18,7 @@ public class App {
                 .name("Morgan")
                 .hangmanController(hangmanController)
                 .build();
+
         hangmanController.showResults();
         hangmanController.play();
         hangmanController.startThreads(playerOne, playerTwo, playerThree);

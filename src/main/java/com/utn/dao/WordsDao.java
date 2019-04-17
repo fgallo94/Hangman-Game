@@ -23,7 +23,7 @@ public class WordsDao {
             PreparedStatement st = conn.getConn().prepareStatement(sq);
             ResultSet rs = st.executeQuery();
             if (rs == null) {
-                System.out.println(" No hay registros en la base de datos");
+                System.out.println(" No registry on database");
             }
             while (Objects.requireNonNull(rs).next()) {
                 words.add(rs.getString("word"));

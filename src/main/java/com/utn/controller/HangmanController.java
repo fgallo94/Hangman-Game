@@ -3,9 +3,13 @@ package com.utn.controller;
 import com.utn.dao.ResultDao;
 import com.utn.dao.WordsDao;
 import com.utn.dto.Player;
+import com.utn.dto.Result;
+import com.utn.exception.CharNotFoundException;
 import com.utn.exception.WordNotFoundException;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HangmanController {
 
@@ -13,9 +17,11 @@ public class HangmanController {
     private WordsDao wordsDao;
     private String wordOfGame;
     private String initWordOfGame;
+    private String transitionalWord;
     private boolean finished = false;
     private boolean available = true;
     private Integer charUsed = 0;
+    private String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     public HangmanController() {
         resultDao = new ResultDao();
@@ -32,7 +38,8 @@ public class HangmanController {
         Optional<String> wordOptional = pickAWord();
         if (wordOptional.isPresent()) {
             System.out.println("Word picked: " + wordOptional.get() + " \n");
-            this.initWordOfGame = wordOptional.get();
+            this.initWordOfGame = wordOptional.get().toLowerCase();
+            this.transitionalWord = wordOptional.get().toLowerCase();
             hideChars(initWordOfGame.length());
         } else {
             throw new WordNotFoundException();
@@ -40,7 +47,10 @@ public class HangmanController {
     }
 
     public void startThreads(Player... players) {
-        Arrays.stream(players).forEach(player -> player.run());
+        Arrays.stream(players).forEach(player -> {
+            Thread t = new Thread(player);
+            t.start();
+        });
     }
 
     public synchronized void game(Player player) throws InterruptedException {
@@ -58,7 +68,11 @@ public class HangmanController {
     private void checkIfWin(Player player) {
         if (wordOfGame.indexOf('*') < 0) {
             this.finished = true;
-            System.out.println("\n Winner " + player.getName() + " after " + charUsed + " chars");
+            System.out.println("\nWinner " + player.getName() + " after " + charUsed + " chars");
+            resultDao.saveResult(Result.builder()
+                    .nameOfWinner(player.getName())
+                    .charsUsed(charUsed)
+                    .build());
         }
     }
 
@@ -70,24 +84,34 @@ public class HangmanController {
 
     private void sayRandomChar() {
         char randomChar = getRandomChar();
-        int indexRandomChar = initWordOfGame.indexOf(randomChar);
-        if (indexRandomChar >= 0) {
-            this.wordOfGame = wordOfGame.replace('*', randomChar);
-            StringBuilder wordOfGameBuilder = new StringBuilder(wordOfGame);
-            wordOfGameBuilder.replace(indexRandomChar, indexRandomChar, String.valueOf(randomChar));
+        if(transitionalWord.contains(String.valueOf(randomChar))) {
+            List<Integer> indexes = IntStream.range(0, initWordOfGame.length())
+                    .filter(i -> initWordOfGame.charAt(i) == randomChar)
+                    .boxed()
+                    .collect(Collectors.toList());
+            indexes.forEach(index -> {
+                StringBuilder wordOfGameBuilder = new StringBuilder(wordOfGame);
+                wordOfGameBuilder.setCharAt(index,randomChar);
+                this.wordOfGame = wordOfGameBuilder.toString();
+            });
+            this.transitionalWord = removeCharOnWord(transitionalWord,randomChar);
         }
         this.charUsed++;
     }
 
-    private void sayRandomCharWithStream(){
-        char randomChar = getRandomChar();
-        initWordOfGame.chars()
-                .
+    private String removeCharOnWord(String stringToRemove ,Character character){
+        return String.valueOf(stringToRemove).replace(String.valueOf(character),"");
     }
 
     private char getRandomChar() {
-        Random r = new Random();
-        return (char) (r.nextInt(26) + 'a');
+        List<Character> characterList
+                = this.alphabet.codePoints()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toList());
+        Collections.shuffle(characterList);
+        char charToReturn = characterList.stream().findFirst().orElseThrow(CharNotFoundException::new);
+        this.alphabet = removeCharOnWord(this.alphabet,charToReturn);
+        return charToReturn;
     }
 
     private Optional<String> pickAWord() {
