@@ -13,4 +13,11 @@ import lombok.Data;
 public class Result {
     private String nameOfWinner;
     private Integer charsUsed;
+
+    @Override
+    public String toString() {
+        return "|| Winner ='" + nameOfWinner + '\'' +
+                ", charsUsed=" + charsUsed +
+                "  \n";
+    }
 }

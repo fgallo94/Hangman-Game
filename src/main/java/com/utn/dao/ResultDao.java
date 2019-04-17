@@ -50,7 +50,7 @@ public class ResultDao {
             PreparedStatement st = conn.getConn().prepareStatement(sq);
             ResultSet rs = st.executeQuery();
             if (rs == null) {
-                System.out.println(" No hay registros en la base de datos");
+                System.out.println(" No registry on databases");
             }
             while (Objects.requireNonNull(rs).next()) {
                 Result result = new Result(rs.getString("name_of_winner"), rs.getInt("char_used"));

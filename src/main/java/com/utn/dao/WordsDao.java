@@ -11,19 +11,19 @@ public class WordsDao {
     private ConnectionInstance conn = ConnectionInstance.getConnection();
 
     /**
-     * Get all the words of the data base as ArrayList of Result.
+     * Get all the words of the data base as ArrayList of String.
      *
      * @return ArrayList<String>
      */
     public ArrayList<String> getAll() {
         ArrayList<String> words = new ArrayList<>();
-        String sq = "select * from Words ";
+        String sq = "select * from Word ";
         try {
             conn.connect();
             PreparedStatement st = conn.getConn().prepareStatement(sq);
             ResultSet rs = st.executeQuery();
             if (rs == null) {
-                System.out.println(" No hay registros en la base de datos");
+                System.out.println(" No registry on database");
             }
             while (Objects.requireNonNull(rs).next()) {
                 words.add(rs.getString("word"));
