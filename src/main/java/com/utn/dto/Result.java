@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 /**
  * Simple POJO of Results
  */
@@ -12,12 +14,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class Result {
     private String nameOfWinner;
+    private Timestamp dateTime;
     private Integer charsUsed;
 
     @Override
     public String toString() {
         return "|| Winner ='" + nameOfWinner + '\'' +
-                ", charsUsed=" + charsUsed +
+                ",dateTime ='"+dateTime +"' | charsUsed=" + charsUsed +
                 "  \n";
     }
 }
