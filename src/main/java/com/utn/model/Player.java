@@ -1,4 +1,4 @@
-package com.utn.dto;
+package com.utn.model;
 
 import com.utn.controller.HangmanController;
 import lombok.Builder;

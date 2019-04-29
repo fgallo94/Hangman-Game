@@ -2,12 +2,16 @@ package com.utn.controller;
 
 import com.utn.dao.ResultDao;
 import com.utn.dao.WordsDao;
-import com.utn.dto.Player;
-import com.utn.dto.Result;
 import com.utn.exception.CharNotFoundException;
 import com.utn.exception.WordNotFoundException;
+import com.utn.model.Player;
+import com.utn.model.Result;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -187,6 +191,10 @@ public class HangmanController {
         return this.available;
     }
 
+    private void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     /**
      * Check if the game is finished
      *
@@ -194,9 +202,5 @@ public class HangmanController {
      */
     public boolean isFinished() {
         return this.finished;
-    }
-
-    private void setAvailable(boolean available) {
-        this.available = available;
     }
 }
