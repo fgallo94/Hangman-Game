@@ -1,7 +1,7 @@
 package com.utn.dao;
 
 
-import com.utn.dto.Result;
+import com.utn.model.Result;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,7 +53,7 @@ public class ResultDao {
                 System.out.println(" No registry on databases");
             }
             while (Objects.requireNonNull(rs).next()) {
-                Result result = new Result(rs.getString("name_of_winner"),rs.getTimestamp("date_time"), rs.getInt("char_used"));
+                Result result = new Result(rs.getString("name_of_winner"), rs.getTimestamp("date_time"), rs.getInt("char_used"));
                 results.add(result);
             }
         } catch (SQLException s) {

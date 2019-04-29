@@ -1,4 +1,4 @@
-package com.utn.dto;
+package com.utn.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ public class Result {
     @Override
     public String toString() {
         return "|| Winner ='" + nameOfWinner + '\'' +
-                ",dateTime ='"+dateTime +"' | charsUsed=" + charsUsed +
+                ",dateTime ='" + dateTime + "' | charsUsed=" + charsUsed +
                 "  \n";
     }
 }

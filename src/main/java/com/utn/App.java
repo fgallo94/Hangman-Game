@@ -1,7 +1,7 @@
 package com.utn;
 
 import com.utn.controller.HangmanController;
-import com.utn.dto.Player;
+import com.utn.model.Player;
 
 public class App {
     /**
