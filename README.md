@@ -1,5 +1,5 @@
 # Hangman-Game
-Hangman game Multi-threading.
+Hangman automated game Multi-threading.
 
 ## Pre-requisites
 
